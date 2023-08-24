@@ -13,13 +13,24 @@
 #define END_OF_FILE -2
 #define EXIT -3
 
+/**
+ * struct builtin_s - A new struct type defining builtin commands.
+ * @name: The name of the builtin command.
+ * @f: A function pointer to the builtin command's function.
+ */
+typedef struct builtin_s
+{
+char *name;
+int (*f)(char **argv, char **front);
+} builtin_tab;
+
 /* functions(string) */
 int custom_strlen(const char *str);
 char *custom_strcat(char *destination, const char *source);
 char *custom_strncat(char *destination, const char *source, size_t num);
 char *custom_strcpy(char *destination, const char *source);
 char *custom_strchr(char *str, char character);
-int custom_strspn(char *str, char *characters);
+int custom_strspn(char *str, char *character);
 int custom_strcmp(char *str1, char *str2);
 int custom_strncmp(const char *str1, const char *str2, size_t num);
 
@@ -40,6 +51,7 @@ void free_environ(void);
 char **get_environ_var(const char *var);
 
 
+
 /**
  * struct list_s - A new struct type defining a linked list.
  * @dir: A directory path.
@@ -51,16 +63,16 @@ char *dir;
 struct list_s *next;
 } list_tab;
 
-/**
- * struct builtin_s - A new struct type defining builtin commands.
- * @name: The name of the builtin command.
- * @f: A function pointer to the builtin command's function.
- */
-typedef struct builtin_s
-{
-char *name;
-int (*f)(char **argv, char **front);
-} builtin_tab;
+
+/*main.c*/
+ssize_t custom_getline(char **line_buffer, size_t *buffer_size, FILE *input_stream);
+void *custom_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char **custom_strtok(char *input_string, char *delimiter);
+char *find_location(char *command);
+list_tab *get_directory_list(char *path);
+int execute_command(char **arguments, char **prefix);
+void free_linked_list(list_tab *list_head);
+char *int_to_string(int number);
 
 /**
  * struct alias_s - A new struct defining aliases.
@@ -87,14 +99,26 @@ int hist;
 
 /* input (helps)*/
 void free_args(char **args, char **front);
+int handle_args(int *exe_ret);
 
 
 /* Errors(Handling)*/
 int create_error(char **args, int err);
+char *error_env(char **args);
+char *error_1(char **args);
+char *error_2_exit(char **args);
+char *error_2_cd(char **args);
+char *error_2_syntax(char **args);
+char *error_126(char **args);
+char *error_127(char **args);
+
 
 /* linkedlist(help) */
 void free_alias_list(alias_t *head);
 void free_list(list_tab *head);
+/*list_tab *add_node_end(list_tab **head, char *dir)*/
+int process_file_commands(char *path_to_file, int *execution_result);
+
 
 #endif /* SHELL_H */
 

@@ -1,6 +1,6 @@
 #include "shell.h"
 
-void sig_handler(int sig);
+void signal_handler(int sig);
 
 int execute_command(char **args, char **front);
 /**
