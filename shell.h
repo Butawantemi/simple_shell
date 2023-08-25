@@ -73,6 +73,7 @@ list_tab *get_directory_list(char *path);
 int execute_command(char **arguments, char **prefix);
 void free_linked_list(list_tab *list_head);
 char *int_to_string(int number);
+char *a_toi(int num);
 
 /**
  * struct alias_s - A new struct defining aliases.
@@ -100,7 +101,16 @@ int hist;
 /* input (helps)*/
 void free_args(char **args, char **front);
 int handle_args(int *exe_ret);
-
+void variable_replacement(char **args, int *exe_ret);
+void handle_line(char **line, ssize_t read);
+void variable_replacement(char **args, int *exe_ret);
+char *get_args(char *line, int *exe_ret);
+int call_args(char **args, char **front, int *exe_ret);
+int run_args(char **args, char **front, int *exe_ret);
+int handle_args(int *exe_ret);
+int check_args(char **args);
+void free_args(char **args, char **front);
+char **replace_aliases(char **args);
 
 /* Errors(Handling)*/
 int create_error(char **args, int err);
@@ -117,6 +127,11 @@ char *error_127(char **args);
 void free_alias_list(alias_t *head);
 void free_list(list_tab *head);
 /*list_tab *add_node_end(list_tab **head, char *dir)*/
+void help_all(void);
+void help_alias(void);
+void help_cd(void);
+void help_exit(void);
+void help_help(void);
 int process_file_commands(char *path_to_file, int *execution_result);
 
 
